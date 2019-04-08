@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <UpdateFiles>
+    <File Path="" Version="1.0.0.5">TrustedAuthentication.exe</File>
+    <File Path="" Version="1.0.0.0">Resources\Images\qrapp.png</File>
+    <File Path="" Version="1.0.0.0">Resources\Images\Android.png</File>
+    <File Path="" Version="1.0.0.0">Resources\Images\ios.png</File>
+    <File Path="" Version="1.0.0.0">THFaceImage.dll</File>
+    <File Path="" Version="1.0.0.0">FaceLiveDCam.dl</File>
+    <File Path="" Version="1.0.0.0">THFaceLive.dll</File>
+    <File Path="" Version="1.0.0.0">THFacialPos.dll</File>
+  </UpdateFiles>
+</root>
