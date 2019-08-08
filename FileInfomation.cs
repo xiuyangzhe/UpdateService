@@ -11,9 +11,9 @@ namespace Update
     public sealed class FileInfomation
     {
 
-        private string _fieldMd5=string.Empty;
+        private string _fieldMd5 = string.Empty;
         private string _fileName = string.Empty;
-        private string _filePath=string.Empty;
+        private string _filePath = string.Empty;
         private byte[] _filebody;
         private string _version = string.Empty;
 
@@ -41,6 +41,11 @@ namespace Update
         /// 更新文件版本号
         /// </summary>
         public string Version { get => _version; set => _version = value; }
+
+        /// <summary>
+        /// 更新类型 File,Folder
+        /// </summary>
+        public string Type { get; set; } = String.Empty;
 
         /// <summary>
         /// 获取文件MD5值
@@ -85,24 +90,55 @@ namespace Update
         public static List<FileInfomation> GetAllFiles(string path)
         {
             var files = new List<FileInfomation>();
-            lock (lockobj)
+            //lock (lockobj)
+            //{
+            var dirinfo = new DirectoryInfo(path);
+            var fileinfos = new List<FileInfo>();
+            GetFiles(dirinfo, ref fileinfos);
+            foreach (var item in fileinfos)
             {
-                var dirinfo = new DirectoryInfo(path);
-                var fileinfos = new List<FileInfo>();
-                GetFiles(dirinfo, ref fileinfos);
-                foreach (var item in fileinfos)
-                {
-                    var fileinfo = new FileInfomation();
-                    fileinfo.FieldMd5 = GetMD5HashFromFile(item.FullName);
-                    if (fileinfo.FieldMd5 == string.Empty)
-                        continue;
-                    fileinfo.FilePath = item.FullName.Replace(path, "");
-                    fileinfo.FileName = item.Name;
-                    fileinfo.Filebody = File.ReadAllBytes(item.FullName);
+                var fileinfo = new FileInfomation();
+                //fileinfo.FieldMd5 = GetMD5HashFromFile(item.FullName);
+                //if (fileinfo.FieldMd5 == string.Empty)
+                //    continue;
+                fileinfo.FilePath = item.DirectoryName.Replace(path, "").Trim('\\');
+                fileinfo.FileName = item.Name;
+                //fileinfo.Filebody = File.ReadAllBytes(item.FullName);
 
-                    files.Add(fileinfo);
-                }
+                files.Add(fileinfo);
             }
+            //}
+
+            return files;
+        }
+
+
+        /// <summary>
+        /// 获取指定文件信息，包括相对路径，md5，文件名,文件整体
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static List<FileInfomation> GetAllFilesWithMd5(string path)
+        {
+            var files = new List<FileInfomation>();
+            //lock (lockobj)
+            //{
+            var dirinfo = new DirectoryInfo(path);
+            var fileinfos = new List<FileInfo>();
+            GetFiles(dirinfo, ref fileinfos);
+            foreach (var item in fileinfos)
+            {
+                var fileinfo = new FileInfomation();
+                fileinfo.FieldMd5 = GetMD5HashFromFile(item.FullName);
+                if (fileinfo.FieldMd5 == string.Empty)
+                    continue;
+                fileinfo.FilePath = item.DirectoryName.Replace(path, "").Trim('\\');
+                fileinfo.FileName = item.Name;
+                //fileinfo.Filebody = File.ReadAllBytes(item.FullName);
+
+                files.Add(fileinfo);
+            }
+            //}
 
             return files;
         }

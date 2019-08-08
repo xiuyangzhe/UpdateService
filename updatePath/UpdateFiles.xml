@@ -1,13 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
   <UpdateFiles>
-    <File Path="" Version="1.0.0.5">TrustedAuthentication.exe</File>
-    <File Path="" Version="1.0.0.0">Resources\Images\qrapp.png</File>
-    <File Path="" Version="1.0.0.0">Resources\Images\Android.png</File>
-    <File Path="" Version="1.0.0.0">Resources\Images\ios.png</File>
-    <File Path="" Version="1.0.0.0">THFaceImage.dll</File>
-    <File Path="" Version="1.0.0.0">FaceLiveDCam.dll</File>
-    <File Path="" Version="1.0.0.0">THFaceLive.dll</File>
-    <File Path="" Version="1.0.0.0">THFacialPos.dll</File>
+	<File Path="" Version="2.0.0.0">TrustedAuthentication.exe</File>
+        <File Path="" Version="2.0.0.0">TrustedAuthentication.exe.config</File>
+	<File Path="" Version="2.0.0.0">TrustedAuthentication.App.dll</File>
+	<File Path="" Version="2.0.0.0">TrustedAuthentication.Update.dll</File>
+	<File Path="" Version="2.0.0.0">Trusted.Business.dll</File>
+	<File Path="" Version="2.0.0.0">Trusted.Device.dll</File>
+	<File Path="" Version="2.0.0.0">Trusted.Utils.dll</File>
+	<File Path="" Version="2.0.0.0">Trusted.Model.dll</File>
+        <File Path="" Version="2.0.0.0">Trusted.DAL.dll</File>
+	<File Path="" Version="2.0.0.0">NLog.dll</File>
+        <File Path="" Version="1.0.0.0">trustedPrintData.db</File>
+	<File Path="" Version="1.0.0.0">SQLite.Interop.dll</File>
+	<File Path="" Version="1.0.0.0">System.Data.SQLite.dll</File>
+	<File Path="" Version="1.0.0.0">Dapper.dll</File>
+        <File Path="" Version="1.0.0.6">Resources\Images\qrapp.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\qrappios.png</File>
+        <File Path="" Version="1.0.0.2">Resources\Images\Android.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\ios.png</File>
+        <File Path="" Version="1.0.0.0">OSK.exe</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\Entrustprint1.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\Entrustprint2.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\menu1.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\menu2.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\menu3.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\netcardmenu1.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\netcardmenu2.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\netcardmenu3.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\netcardmenu4.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\qrclose.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\qrcodpic.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\entrust\print.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\entrust\PrintConfirmbtn.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\entrust\qrcode.png</File>
+        <File Path="" Version="1.0.0.0">Resources\Images\menu\entrust\qrcodeinfo.png</File>
+	<File Path="" Version="1.0.0.0">Resources\Images\menu\process.png</File>
+	<File Path="" Version="1.0.0.0">Resources\Images\¼üÅÌ\long.png</File>
+        <File Path="" Version="1.0.0.1" Type="Folder">CTID</File>
+	<File Path="" Version="1.0.0.0">IDIdentifytest.dll</File>
+	<File Path="" Version="1.0.0.0">IDIdentifytest.dll.metagen</File>
+	<File Path="" Version="1.0.0.0">IDIdentify.dll</File>
+	<File Path="" Version="1.0.0.0">HidIdentify.dll </File>
+	<File Path="" Version="1.0.0.0">riapi.dll</File>
+	<File Path="" Version="1.0.0.0">libeay32.dll</File>
+	<File Path="" Version="1.0.0.0">msvcr100d.dll</File>
+	<File Path="" Version="1.0.0.0">msvcrtd.dll</File>	   
   </UpdateFiles>
 </root>

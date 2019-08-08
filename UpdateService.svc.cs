@@ -29,6 +29,7 @@ namespace Update
                 var fileinfo = new FileInfomation();
                 fileinfo.FilePath = node.GetAttribute("Path");
                 fileinfo.Version = node.GetAttribute("Version");
+                fileinfo.Type = node.GetAttribute("Type");
                 fileinfo.FileName = node.InnerText;
 
                 files.Add(fileinfo);
@@ -64,17 +65,51 @@ namespace Update
                 //获取需要更新的不同版本文件
                 foreach (var file in serverconfigs)
                 {
-                    if (clientfiles.Exists(m => m.FilePath == file.FilePath && m.FileName == file.FileName))
+
+                    if (file.Type == "Folder")
                     {
-                        var fileInfomation = clientfiles.First(m => m.FilePath == file.FilePath && m.FileName == file.FileName);
-                        if (fileInfomation.Version != file.Version)
+                        if (clientfiles.Exists(m => m.FilePath == file.FilePath && m.FileName == file.FileName))
+                        {
+                            var fileInfomation = clientfiles.First(m =>
+                                m.FilePath == file.FilePath && m.FileName == file.FileName);
+                            if (fileInfomation.Version != file.Version)
+                            {
+                                var files = FileInfomation.GetAllFiles(Path.Combine(updateFolderPath, file.FileName));
+                                foreach (var updatefile in files)
+                                {
+                                    updatefile.FilePath = Path.Combine(fileInfomation.FileName, updatefile.FilePath);
+                                    updatefiles.Add(updatefile);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var folder = Path.Combine(updateFolderPath, file.FileName);
+                            var files = FileInfomation.GetAllFiles(folder);
+                            foreach (var updatefile in files)
+                            {
+                                updatefile.FilePath = Path.Combine(file.FileName, updatefile.FilePath);
+                                updatefiles.Add(updatefile);
+                            }
+                        }
+
+                    }
+
+                    else
+                    {
+                        if (clientfiles.Exists(m => m.FilePath == file.FilePath && m.FileName == file.FileName))
+                        {
+                            var fileInfomation = clientfiles.First(m =>
+                                m.FilePath == file.FilePath && m.FileName == file.FileName);
+                            if (fileInfomation.Version != file.Version)
+                            {
+                                updatefiles.Add(file);
+                            }
+                        }
+                        else
                         {
                             updatefiles.Add(file);
                         }
-                    }
-                    else
-                    {
-                        updatefiles.Add(file);
                     }
 
                 }
@@ -91,7 +126,11 @@ namespace Update
                 //获取文件内容
                 foreach (var file in updatefiles)
                 {
+                    Log.Info(file.FilePath);
+                    Log.Info(file.FileName);
+
                     var filepath = Path.Combine(updateFolderPath, file.FilePath, file.FileName);
+
                     using (FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
                         var filebytes = new byte[fs.Length];
@@ -103,6 +142,64 @@ namespace Update
 
                 clientfiles.Clear();
                 clientfiles = updatefiles;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("获取更新文件错误", ex);
+                return false;
+            }
+            return true;
+        }
+
+        public bool UpdateByMd5(ref List<FileInfomation> clientfiles)
+        {
+            try
+            {
+                var updatefiles = FileInfomation.GetAllFilesWithMd5(updateFolderPath);
+                if (updatefiles.Count != 0)
+                {
+
+                    for (var i = 0; i < updatefiles.Count; i++)
+                    {
+                        if (updatefiles[i].FieldMd5 != string.Empty)
+                        {
+                            var clientfile = clientfiles.Find(m => m.FieldMd5 == updatefiles[i].FieldMd5);
+                            if (clientfile != null)
+                            {
+                                updatefiles.RemoveAt(i);
+                                i--;
+                            }
+                        }
+                    }
+
+                    //判断是否更新updateFile.xml
+                    if (updatefiles.Count > 0)
+                    {
+                        var configfile = new FileInfomation();
+                        configfile.FileName = "UpdateFiles.xml";
+                        updatefiles.Add(configfile);
+                    }
+
+                    //获取文件内容
+                    foreach (var file in updatefiles)
+                    {
+                        Log.Info(file.FilePath);
+                        Log.Info(file.FileName);
+
+                        var filepath = Path.Combine(updateFolderPath, file.FilePath, file.FileName);
+
+                        using (FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                        {
+                            var filebytes = new byte[fs.Length];
+                            fs.Read(filebytes, 0, filebytes.Length);
+                            file.Filebody = filebytes;
+                        }
+                    }
+
+
+                    clientfiles.Clear();
+                    clientfiles = updatefiles;
+                }
             }
             catch (Exception ex)
             {

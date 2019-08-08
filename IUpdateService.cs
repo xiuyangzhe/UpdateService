@@ -16,6 +16,9 @@ namespace Update
         [OperationContract]
         bool Update(ref List<FileInfomation> updatefiles);
 
+        [OperationContract]
+        bool UpdateByMd5(ref List<FileInfomation> updatefiles);
+
 
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
